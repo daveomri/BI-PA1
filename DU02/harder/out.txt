@@ -1,0 +1,8 @@
+Zadejte intervaly:
+Cifer: 1866669197
+Cifer: 1225868564
+Cifer: 1344649777
+Cifer: 1468377714
+Cifer: 1290879562
+Cifer: 1217920440
+Cifer: 1867591359

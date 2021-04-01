@@ -1,0 +1,103 @@
+Úkolem je vytvořit program, který bude plánovat rozmístění billboardů na dálnici.
+
+Přestože bilboardy měly být od dálnic v ČR odstraněny již loni, celý proces se vinou specifických podmínek nedaří dokončit. Inovativním řešením vzniklé situace by mohlo být omezené povolení billboardů spojené s vhodnějším plánováním rozmístění billboardů podle dálnic. Realizace programu pro takové plánování bude váš úkol.
+
+Předpokládáme dálnici o celkové délce len. Podle této dálnice jsou vybraná místa, kde by bylo možné umístit billboardy (jinam je umístit nelze). Tato místa jsou určena vzdáleností od počátku dálnice, vzdálenost je celé číslo z intervalu <1;len-1>. Celkem je takto vybráno nejvýše 1000000 míst.
+
+Do některých takových míst je potřeba umístit billboardy. Billboardů je potřeba umístit co nejméně, ale zároveň je potřeba zajistit, aby mezi dvojicí po sobě jdoucích billboardů byla vzdálenost nejvýše dist. Zároveň první billboard musí být umístěn nejdále ve vzdálenosti dist od počátku dálnice a poslední billboard musí být umístěn nejdále ve vzdálenosti dist od konce dálnice. Program na základě těchto informací určí, kolik je celkem potřeba umístit billboardů.
+
+Vstupem programu je délka dálnice len (celé číslo) následovaná seznamem míst hodných pro umístění billboardů. Pozice pro umístění billboardů jsou celá čísla, jsou zapsaná ve složených závorkách a oddělená čárkami. Za seznamem pozic následují dotazy. Každý dotaz je zadán jako celé číslo dist, toto číslo udává největší akceptovatelnou vzdálenost mezi dvojicí po sobě jdoucích billboardů. Zadávání dotazů končí po dosažení konce vstupu (EOF).
+
+Výstupem programu je vypočtený minimální potřebný počet billboardů pro každý zadaný dotaz, případně program zobrazí informaci, že pro zadanou vzdálenost billboardy rozmístit nelze. Přesný formát výpisu je vidět v ukázkovém běhu programu.
+
+Pokud je vstup neplatný, program to musí detekovat a zobrazit chybové hlášení. Chybové hlášení zobrazujte na standardní výstup (ne na chybový výstup). Za chybu považujte:
+
+vzdálenosti nejsou platná celá čísla,
+délka dálnice je záporná nebo nulová,
+pozice pro umístěni billboardů nejsou z intervalu <1;len-1>,
+nejsou zadané žádné pozice pro umístění billboardů,
+je zadáno více než 1000000 pozic pro umístění billboardů,
+požadovaná vzdálenost dist je záporná nebo nulová,
+chybí nebo přebývá nějaký oddělovač (složená závorka, dvojtečka, čárka).
+Ukázka práce programu:
+Mozna umisteni:
+1000: { 250, 500, 750 }
+Vzdalenosti:
+800
+Billboardu: 1
+500
+Billboardu: 1
+300
+Billboardu: 3
+250
+Billboardu: 3
+200
+N/A
+Mozna umisteni:
+1000 : { 250 , 300 , 550 , 750 }
+Vzdalenosti:
+371
+Billboardu: 3
+507
+Billboardu: 2
+273
+Billboardu: 4
+561
+Billboardu: 1
+Mozna umisteni:
+1000:{481,692,159,843,921,315}
+Vzdalenosti:
+1000
+Billboardu: 0
+999
+Billboardu: 1
+519
+Billboardu: 1
+518
+Billboardu: 2
+377
+Billboardu: 2
+376
+Billboardu: 3
+315
+Billboardu: 3
+314
+Billboardu: 4
+308
+Billboardu: 4
+307
+Billboardu: 5
+211
+Billboardu: 5
+210
+N/A
+Mozna umisteni:
+3:{1,2,1,2}
+Vzdalenosti:
+1
+Billboardu: 2
+10
+Billboardu: 0
+Mozna umisteni:
+500:{250,830}
+Nespravny vstup.
+Mozna umisteni:
+330:{15,240 310
+Nespravny vstup.
+Poznámky:
+Ukázkové běhy zachycují očekávané výpisy Vašeho programu (tučné písmo) a vstupy zadané uživatelem (základní písmo). Zvýraznění tučným písmem je použité pouze zde na stránce zadání, aby byl výpis lépe čitelný. Váš program má za úkol pouze zobrazit text bez zvýrazňování (bez HTML markupu).
+Znak odřádkování (\n) je i za poslední řádkou výstupu (i za případným chybovým hlášením).
+Program si musí ukládat vhodné pozice pro umístění billboardů. Těchto pozic může být nejvýše 1000000. Proto je lze umístit do staticky alokovaného pole. V úloze není potřeba alokovat prostor dynamicky.
+Pro zvládnutí úlohy v povinných a nepovinných testech postačuje naivní algoritmus. Algoritmus prochází pozice pro umístění billboardů a obsazuje je podle zadaného kritéria maximální povolené vzdáleností.
+Testy rychlosti #1 a #2 zadávají dlouhé dálnice (rozhodně delší než je délka dálniční sítě v ČR), mnoho vhodných pozic pro billboardy a mnoho dotazů. Naivní algoritmus zde nestačí, implementace překročí maximální dobu běhu. Pro zvládnutí tohoto testu je potřeba efektivnější algoritmus výpočtu a vhodně si přeuspořádat zadávaná vstupní data.
+Číselné vstupní hodnoty jsou zadávané tak, aby se vešly do rozsahu datového typu int.
+Váš program bude spouštěn v omezeném testovacím prostředí. Je omezen dobou běhu (limit je vidět v logu referenčního řešení) a dále je omezena i velikost dostupné paměti (je k dispozici cca 500MiB paměti, to bohatě postačuje pro rozumné uložení vstupních dat ve staticky alokovaném poli).
+Slovní popis struktury platných vstupních dat není zcela exaktní. Proto připojujeme i formální popis vstupního jazyka v EBNF:
+    input      ::= { whiteSpace } integer { whiteSpace } ':' { whiteSpace } '{' posList '}' 
+                   queryList { whiteSpace }
+    whiteSpace ::= ' ' | '\t' | '\n' | '\r'
+    posList    ::= { { whiteSpace } integer { whiteSpace } ',' } { whiteSpace } integer { whiteSpace }
+    queryList  ::= { { whiteSpace } integer }
+    integer    ::= digit { digit }
+    digit      ::= '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
+  
